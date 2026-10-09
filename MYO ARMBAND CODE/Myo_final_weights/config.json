@@ -1,0 +1,60 @@
+{
+    "model_architecture": "Metric_ContinualNet",
+    "embedding_dim": 32,
+    "num_sensors": 8,
+    "window_size": 200,
+    "sampling_rate": 200.0,
+    "base_classes": [
+        0,
+        1,
+        2
+    ],
+    "novel_classes": [
+        3,
+        4,
+        5
+    ],
+    "total_classes": 6,
+    "training_config": {
+        "loss_function": "SupConLoss",
+        "temperature": 0.07,
+        "optimizer": "AdamW",
+        "learning_rate": 0.001,
+        "weight_decay": 0.001,
+        "data_augmentation": {
+            "warp_factor_range": [
+                0.8,
+                1.2
+            ],
+            "noise_std": 0.01
+        },
+        "early_stopping": {
+            "patience": 7,
+            "monitor": "val_loss"
+        },
+        "lr_scheduler": {
+            "type": "ReduceLROnPlateau",
+            "factor": 0.5,
+            "patience": 5
+        }
+    },
+    "inference_config": {
+        "mc_dropout_passes": 5,
+        "uncertainty_threshold": 0.2,
+        "distance_threshold": 0.5
+    },
+    "domain_adaptation": {
+        "method": "SLDA_Recalibration",
+        "shift_factor": 0.5,
+        "noise_std": 0.2,
+        "baseline_accuracy": 53.64,
+        "recalibrated_accuracy": 93.42,
+        "improvement": 39.78
+    },
+    "performance_summary": {
+        "base_classes_accuracy": 98.03,
+        "novel_classes_accuracy_range": "65-80%",
+        "mc_dropout_safety_accuracy": 97.0,
+        "domain_shift_robustness": "93.42% after recalibration"
+    }
+}

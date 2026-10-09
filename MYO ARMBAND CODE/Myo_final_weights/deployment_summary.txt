@@ -1,0 +1,37 @@
+======================================================================
+MYO PROSTHETIC CONTROL SYSTEM - DEPLOYMENT SUMMARY
+======================================================================
+
+MODEL INFORMATION:
+  Architecture: Metric_ContinualNet
+  Embedding Dimension: 32
+  Number of Sensors: 8
+  Window Size: 200 samples
+  Sampling Rate: 200.0 Hz
+
+CLASS INFORMATION:
+  Base Classes: [0, 1, 2]
+  Novel Classes: [3, 4, 5]
+  Total Classes: 6
+
+PERFORMANCE METRICS:
+  Base Classes Accuracy: 98.03%
+  Novel Classes Accuracy: 65-80%
+  MC Dropout Safety: 97.0%
+  Domain Shift Robustness: 93.42% after recalibration
+
+FILES INCLUDED:
+  1. metric_model_myo.pth - Trained backbone model weights
+  2. slda_classifier_original.pkl - SLDA for ideal conditions
+  3. slda_classifier_recalibrated.pkl - SLDA for domain shift
+  4. subject_scaler.pkl - Data preprocessing scaler
+  5. config.json - System configuration
+  6. deployment_summary.txt - This file
+
+DEPLOYMENT INSTRUCTIONS:
+  1. Load metric_model_myo.pth for feature extraction
+  2. Load subject_scaler.pkl for input normalization
+  3. Use slda_classifier_original.pkl for clean data
+  4. Use slda_classifier_recalibrated.pkl for shifted data
+  5. Apply MC Dropout (5 passes) for uncertainty estimation
+  6. Reject samples with uncertainty > 0.2
